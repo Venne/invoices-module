@@ -1,0 +1,19 @@
+supplier: dodavatel
+customer: zákazník
+invoice: faktura
+invoices: faktury
+paid: zaplaceno
+unpaid: nezaplaceno
+transfer: bankovním převodem
+cash: v hotovosti
+new: nové
+canceled: zrušeno
+unit value: jednotková hodnota
+units: jednotek
+quantity unit: množstevní jednotka
+expiration date: datum expirace
+payment: platba
+tax: daň
+add item: přidat položku
+invoice settings: nastavení faktur
+manage and setup invoices: správa a nastavení faktur

@@ -1,0 +1,5 @@
+{foreach $presenter->accounts as $account}
+<li n:if="$presenter->isAuthorized('default')"{if $presenter->isLinkCurrent("default")} class="active"{/if}>
+	<a class="ajax" href="{plink default account => $account->id, invoice => NULL}">{$account}</a>
+</li>
+{/foreach}

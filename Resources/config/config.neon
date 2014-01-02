@@ -1,0 +1,75 @@
+services:
+
+	translator.translator:
+		setup:
+			- '$service->addDictionary(new TranslatorModule\Dictionary(?))'(%modules.invoices.path%/Resources/translations)
+
+	invoices.invoiceManager:
+		class: InvoicesModule\Admin\Invoices\InvoiceManager(%dataDir%/invoices)
+
+	invoices.invoiceRepository:
+		class: InvoicesModule\Admin\Invoices\InvoiceRepository
+		factory: @entityManager::getRepository('InvoicesModule\Admin\Invoices\InvoiceEntity')
+		tags: [proxy: DoctrineModule\Repositories\BaseRepository]
+
+	invoices.itemRepository:
+		class: InvoicesModule\Admin\Invoices\ItemRepository
+		factory: @entityManager::getRepository('InvoicesModule\Admin\Invoices\ItemEntity')
+		tags: [proxy: DoctrineModule\Repositories\BaseRepository]
+
+	invoices.accountRepository:
+		class: InvoicesModule\Admin\Invoices\AccountRepository
+		factory: @entityManager::getRepository('InvoicesModule\Admin\Invoices\AccountEntity')
+		tags: [proxy: DoctrineModule\Repositories\BaseRepository]
+
+	invoices.revisionRepository:
+		class: InvoicesModule\Admin\Invoices\RevisionRepository
+		factory: @entityManager::getRepository('InvoicesModule\Admin\Invoices\RevisionEntity')
+		tags: [proxy: DoctrineModule\Repositories\BaseRepository]
+
+	invoices.invoicesTableFactory:
+		class: InvoicesModule\Admin\Invoices\InvoicesTableFactory
+
+	invoices.accountsTableFactory:
+		class: InvoicesModule\Admin\Invoices\AccountsTableFactory
+
+	invoices.revisionTableFactory:
+		class: InvoicesModule\Admin\Invoices\RevisionTableFactory
+
+	invoices.invoiceFormFactory:
+		class: InvoicesModule\Admin\Invoices\InvoiceFormFactory
+		setup:
+			- injectFactory(@cms.admin.basicFormFactory)
+
+	invoices.accountFormFactory:
+		class: InvoicesModule\Admin\Invoices\AccountFormFactory
+		setup:
+			- injectFactory(@cms.admin.basicFormFactory)
+
+	invoices.revisionFormFactory:
+		class: InvoicesModule\Admin\Invoices\RevisionFormFactory
+		setup:
+			- injectFactory(@cms.admin.basicFormFactory)
+
+
+factories:
+
+	cms.admin.invoicesPresenter:
+		class: InvoicesModule\Admin\Invoices\InvoicesPresenter
+		tags: [presenter, administration: [
+			link: 'Cms:Admin:Invoices:'
+			category: 'Office'
+			name: 'Invoices'
+			description: 'Invoices'
+			priority: 0
+		]]
+
+	cms.admin.accountsPresenter:
+		class: InvoicesModule\Admin\Invoices\AccountsPresenter
+		tags: [presenter, administration: [
+			link: 'Cms:Admin:Accounts:'
+			category: 'Office'
+			name: 'Invoice settings'
+			description: 'Manage and setup invoices'
+			priority: 0
+		]]

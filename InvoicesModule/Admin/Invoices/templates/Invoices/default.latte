@@ -1,0 +1,58 @@
+{block header}
+	{_'Invoices'}
+{/block}
+
+{block toolbar-items}
+	{if $user->identity instanceof \CmsModule\Pages\Users\UserEntity}{include "./head.latte"}{/if}
+{/block}
+
+{block breadcrumb}
+	{include #parent}
+	<li class="active">{include #header}</li>
+{/block}
+
+{block #content}
+
+{if $user->identity instanceof \CmsModule\Pages\Users\UserEntity}
+
+	{if !$presenter->invoice}
+		{control table}
+	{else}
+
+		<div class="container container-full">
+			<div class="row">
+				<div class="col-md-8">
+					<h2>
+						<a class="pull-left btn btn-default btn-lg" n:href="this invoice => NULL"><span class="glyphicon glyphicon-chevron-left"></span></a>&nbsp;
+						{$presenter->currentInvoice}
+					</h2>
+
+					<hr />
+
+					{control revisionTable}
+				</div>
+				<div class="col-md-4">
+					<dl class="dl-horizontal">
+						<dt>ID:</dt>
+						<dd>{$presenter->currentInvoice->id}</dd>
+
+						<hr />
+
+						<dt>{_Date}:</dt>
+						<dd>{$presenter->currentInvoice->date|date:'%d.%m.%Y'}</dd>
+
+						<dt>{_Expiration}:</dt>
+						<dd>{$presenter->currentInvoice->expirationDate|date:'%d.%m.%Y'}</dd>
+
+						<hr />
+
+						<dt>{_State}:</dt>
+						{var $states = \InvoicesModule\Admin\Invoices\InvoiceEntity::getStates()}
+						<dd>{_$states[$presenter->currentInvoice->state]}</dd>
+					</dl>
+				</div>
+			</div>
+		</div>
+
+	{/if}
+{/if}
